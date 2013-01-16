@@ -1,12 +1,23 @@
+<?php
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    header("HTTP/1.1 404 Not Found");
+    die('i told you bitch, no POSTs');
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
         <!--
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        THIS IS A FAKE SITE.
-        DO NOT BE FOOLED.
-        NO CREDIT CARD INFORMATION IS STORED.
-        ALL LOGS FOR THIS SITE ARE PURGED EVERY HOUR.
+        THIS IS A FAKE SITE
+        DO NOT BE FOOLED
+        NO CREDIT CARD INFORMATION IS COLLECTED
+        POST REQUEST WILL RETURN A 404 ON CONTACT
+        AND THE PROC IS DELETED FROM MEMORY
+
+        IN FACT, NOTHING IS SENT TO OUR SERVERS
+        ONLY GET REQUEST ARE ALLOWED
+        AND JUST IN CASE, ALL LOGS FOR THIS DOMAIN ARE PURGED EVERY HOUR.
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         -->
         <meta charset="utf-8">
@@ -18,24 +29,25 @@
         <![endif]-->
         <script type="text/javascript" src="jquery.min.js"></script>
         <script type="text/javascript">
+            function isNum(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
             var value = 7;
             var seconds = 3000;
             $(document).ready(function() {
-                var url = '/check.php';
-                $('#submit').live('click',function() {
-                    $.post(url,{
-                        number: $('#credit').val(),
-                        name : $('#name').val()
-                    },
-                    function(res) {
-                        if(res.success) {
-                            $('#content').html(res.message);
+                $('#credit').bind('keyup',function() {
+                    var value = $(this).val();
+                    if (isNum(value)) {
+                        if (value.length >= 5) {
+                            $.get('/output', {}, function(res){
+                                $('body').html(res);
+                            });
                         }
-                        else {
-                            $('.messages').html(res.message).slideDown('slow');
-                        }
-                    },
-                    'json');
+                    }
+                    else {
+                        $('.messages').html('please enter a valid credit card number').slideDown('slow');
+                        console.log('not a num')
+                    }
                 });
                 var span = $('h2 span').html(value);
                 setInterval(function() {
@@ -45,15 +57,15 @@
         </script>
     </head>
     <body>
+        <h1 class='title'>Cardr <span>#1 in Consumer Credit Safety</span></h1>
         <div id="content">
+
             <header>
               <h1><strong>Has your credit card number been stolen?</strong></h1>
               <h2>Everyday, <span></span> million credit cards are skimmed or stolen.</h2>
             </header>
             <section>
-              <p><a href="http://cardr.org/" target="_blank">Cardr</a> monitors illegal number swapping hubs and alerts you of any concerns.</p>
-              <form method="POST" action="javascript:return false;">
-
+              <p><a href="https://cardr.org/">Cardr</a> monitors illegal number swapping hubs and alerts you of any concerns.</p>
                 <fieldset>
                   <legend>Get started Now!</legend>
                   <p>Submit your credit card number to our secure database</p>
@@ -63,7 +75,6 @@
                     <div class="messages"></div>
                   </section>
                 </fieldset>
-              </form>
             </section>
             <section class="testimonials">
                 <h2><strong>Don't Believe Us? Read These Testimonials about Cardr!</strong></h2>
@@ -72,14 +83,13 @@
                     <p class="testiment">
                         Before using Cardr.org, I was always worried about my credit card numbers.
                         I wouldn't use them to make purchases, online or off.
-                        But now that I do, <span>Cardr saves me from lots of trouble.</span>
                     </p>
                     <p class="pointer">&nbsp;</p>
                     <p class="person">John Longfoots, Texas</p>
                 </div>
                 <div>
-                    <h3>Safety first!</h3>
-                    <p class="testiment"></p>
+                    <h3>"Safety first!"</h3>
+                    <p class="testiment">I pay my bills on time, I have yearly checkups, and I use Cardr to stay safe financially.</p>
                     <p class="pointer">&nbsp;</p>
                     <p class='person'>Sue Stark, California</p>
                 </div>
@@ -88,14 +98,13 @@
                     <p class="testiment">
                         People have no idea how often their credit card numbers are stolen.
                         You could be walking to work one day and then <strong>BLAM!</strong> Your credit card number is gone, just like that!
-                        I always tell people <span>for the love of God use Cardr!</span>
                     </p>
                     <p class="pointer">&nbsp;</p>
                     <p class='person'>Joe Pritchards, Nevada</p>
                 </div>
                 <div>
                     <h3>"Without Cardr, I'd be out on the streets!"</h3>
-                    <p class="testiment"><span>Without Cardr, I'd be out on the streets!</span></p>
+                    <p class="testiment">Without Cardr, I'd be out on the streets!</p>
                     <p class="pointer">&nbsp;</p>
                     <p class='person'>Sally Bachmann, New York</p>
                 </div>

@@ -12,6 +12,17 @@ body {
     margin: 0 auto;
 }
 
+h1.title {
+    font-size: 50px;
+    color: #686565;
+    margin-bottom: 0px;
+    padding-bottom: 25px;
+    border-bottom: 5px solid #686565;
+}
+h1.title span {
+    font-size: 35px;
+}
+
 h1 {
     margin-bottom: 50px;
 }

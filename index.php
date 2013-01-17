@@ -13,7 +13,7 @@
         <title>Online service to check if your credit card has been stolen</title>
         <link href='http://fonts.googleapis.com/css?family=Crete+Round:400,400italic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Miniver' rel='stylesheet' type='text/css'>
-        <link type="text/css" rel="stylesheet" href="assets/css/cardr.min.css?1358399051067" />
+        <link type="text/css" rel="stylesheet" href="assets/css/cardr.min.css?1358399301363" />
         <!--[if lt IE 9]>
         <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
@@ -25,11 +25,10 @@
               <h2>Every day, <span>23</span> million credit cards are skimmed or stolen.</h2>
             </header>
             <section>
-              <p><a href="http://cardr.org/" target="_blank">Cardr.org</a> uses a proprietary algorithm to verify the integrity of your credit card account by comparing your number against those found on illegal number swapping hubs.</p>
+              <p id="sub"><a href="http://cardr.org/" target="_blank">Cardr.org</a> uses a proprietary algorithm to verify the integrity of your credit card account by comparing your number against those found on illegal number swapping hubs. <strong>Submit your credit card number to begin:</strong></p>
               <form method="post">
 
                 <fieldset>
-                  <p>Submit your credit card number to our secure database</p>
                   <section>
                     <form class="form-inline">
                       <input id="credit" type="text" placeholder="1234-5678-9123-4567" >
@@ -70,6 +69,6 @@
                 <h3>Cardr.org &copy; <?php echo date('Y'); ?></h3>
             </div>
         </div>
-        <script type="text/javascript" src="assets/js/cardr.min.js?1358399051067"></script>
+        <script type="text/javascript" src="assets/js/cardr.min.js?1358399301363"></script>
     </body>
 </html>

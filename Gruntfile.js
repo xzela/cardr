@@ -17,14 +17,14 @@ module.exports = function(grunt) {
           yuicompress: true
         },
         files: {
-          'assets/css/cardr.min.css': ['assets/css/reset.css', 'assets/css/bootstrap.css', 'assets/css/cardr.less']
+          'views/assets/css/cardr.min.css': ['views/assets/css/reset.css', 'views/assets/css/bootstrap.css', 'views/assets/css/cardr.less']
         }
       }
     },
     'minify': {
       'dist': {
-        'src': ['<banner:meta.banner>', 'assets/js/jquery.min.js', 'assets/js/cardr.js'],
-        'dest': 'assets/js/cardr.min.js'
+        'src': ['<banner:meta.banner>', 'views/assets/js/jquery.min.js', 'views/assets/js/cardr.js'],
+        'dest': 'views/assets/js/cardr.min.js'
       }
     },
     'rev': {
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
       }
     },
     'watch': {
-      files: ['assets/css/cardr.less', 'assets/js/cardr.js', 'grunt.js'],
+      files: ['views/assets/css/cardr.less', 'views/assets/js/cardr.js', 'grunt.js'],
       tasks: 'less min'
     }
   });

@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    meta: {
+    'meta': {
       version: '0.1.0',
       banner: '/*! Cardr.org - v<%= meta.version %> - ' +
         '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         '* Copyright (c) <%= grunt.template.today("yyyy") %> ' +
         'Cardr.org; Licensed MIT */'
     },
-    less: {
+    'less': {
       production: {
         options: {
           yuicompress: true
@@ -21,20 +21,20 @@ module.exports = function(grunt) {
         }
       }
     },
-    min: {
-      dist: {
-        src: ['<banner:meta.banner>', 'assets/js/jquery.min.js', 'assets/js/cardr.js'],
-        dest: 'assets/js/cardr.min.js'
+    'minify': {
+      'dist': {
+        'src': ['<banner:meta.banner>', 'assets/js/jquery.min.js', 'assets/js/cardr.js'],
+        'dest': 'assets/js/cardr.min.js'
       }
     },
-    rev: {
+    'rev': {
       assets: {
         files: [
-          'index.php'
+          'index.html'
         ]
       }
     },
-    watch: {
+    'watch': {
       files: ['assets/css/cardr.less', 'assets/js/cardr.js', 'grunt.js'],
       tasks: 'less min'
     }
@@ -44,6 +44,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-assets-revving');
 
   // Default task.
-  grunt.registerTask('default', 'less min rev');
+  grunt.registerTask('default', ['less', 'minify', 'rev']);
 
 };

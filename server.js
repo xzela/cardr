@@ -53,9 +53,9 @@ var start = function() {
 								'Content-Length': file.length
 							});
 							// response.write(file, "binary");
-							response.end(file);
+							response.write(file, "binary");
+							response.end();
 						}
-						// response.end('hello cardr');
 					});
 				}
 			});

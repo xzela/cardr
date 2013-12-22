@@ -12,10 +12,6 @@ var contentTypes = {
 	'.png': 'image/png'
 };
 
-var fourOhfour = function() {
-
-};
-
 var start = function() {
 	function onRequest(request, response) {
 		if (request.method === "POST") {
@@ -26,34 +22,25 @@ var start = function() {
 		} else {
 			var uri = url.parse(request.url).pathname,
 				filename = path.join(__dirname, 'views', uri);
-			console.log('request received for: ' + uri);
-			console.log('looking for local resource: ' + filename);
 			fs.exists(filename, function(exists) {
 				if (!exists) {
-					console.log('resource does not exist: ' + filename);
 					response.writeHead(404, {'Content-type': 'text/plain'});
-					response.write('resource does not exist: ' + filename);
+					response.write('resource does not exist: ' + uri);
 					response.end();
 				} else {
 					// if root directory, append index.html
 					if (fs.statSync(filename).isDirectory()) {
 						filename += 'index.html';
 					}
+					var contentType = contentTypes[path.extname(filename)];
 					fs.readFile(filename, function(err, file) {
-						console.log('reading file: ' + filename);
 						if (err) {
 							response.writeHead(404, {'Content-type:': 'text/plain'});
 							response.write(err + "\n");
 							response.end();
 						} else {
-							var contentType = contentTypes[path.extname(filename)];
 							console.log(contentType);
-							response.writeHead(200, {
-								'Content-Type:': contentType,
-								'Content-Length': file.length
-							});
-							// response.write(file, "binary");
-							response.write(file, "binary");
+							response.write(file);
 							response.end();
 						}
 					});

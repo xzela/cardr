@@ -47,11 +47,11 @@ var start = function() {
 				}
 			});
 		}
-	}
+	};
 	var server = http.createServer(onRequest);
 	server.listen(port, host, function() {
 		console.log('Server listening on: ' + host + ':' + port);
 	});
-}
+};
 
 exports.start = start;

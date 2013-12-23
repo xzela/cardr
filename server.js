@@ -43,7 +43,7 @@ var start = function() {
 							response.end();
 						} else {
 							console.log('MIME TYPE for: ', filename , contentType);
-							response.writeHead(200, {'Content-Type', contentType});
+							response.writeHead(200, {'Content-Type': contentType});
 							response.write(file);
 							response.end();
 						}

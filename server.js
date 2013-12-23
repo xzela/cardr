@@ -1,6 +1,5 @@
 var http = require('http'),
 	https = require('https'),
-	ssl = require('./ssl'),
 	fs = require('fs'),
 	url = require('url'),
 	path = require('path'),
@@ -38,11 +37,13 @@ var start = function() {
 					var contentType = contentTypes[path.extname(filename)];
 					fs.readFile(filename, function(err, file) {
 						if (err) {
-							response.writeHead(404, {'Content-type:': 'text/plain'});
+							console.log(err);
+							response.writeHead(404, {'Content-type': 'text/plain'});
 							response.write(err + "\n");
 							response.end();
 						} else {
 							console.log('MIME TYPE for: ', filename , contentType);
+							response.writeHead(200, {'Content-Type', contentType});
 							response.write(file);
 							response.end();
 						}
@@ -52,9 +53,13 @@ var start = function() {
 		}
 	};
 	if (process.env.NODE_ENV === 'production') {
+		var ssl = require('.ssl');
 		var server = https.createServer(ssl, onRequest);
 	} else {
-		var server = http.createServer(onRequest);
+		var server = http.createServer(function(request, response) {
+			onRequest(request, response);
+			// console.log('done...');
+		});
 	}
 	server.listen(port, host, function() {
 		console.log('Server listening on: ' + host + ':' + port);

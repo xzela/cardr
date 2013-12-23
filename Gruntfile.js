@@ -3,6 +3,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     'meta': {
       version: '0.1.0',
       banner: '/*! Cardr.org - v<%= meta.version %> - ' +
@@ -21,16 +22,16 @@ module.exports = function(grunt) {
         }
       }
     },
-    'minify': {
-      'dist': {
-        'src': ['<banner:meta.banner>', 'views/assets/js/jquery.min.js', 'views/assets/js/cardr.js'],
-        'dest': 'views/assets/js/cardr.min.js'
-      }
-    },
+    // 'minify': {
+    //   'dist': {
+    //     'src': ['<banner:meta.banner>', 'views/assets/js/jquery.min.js', 'views/assets/js/cardr.js'],
+    //     'dest': 'views/assets/js/cardr.min.js'
+    //   }
+    // },
     'rev': {
       assets: {
         files: [
-          'index.html'
+          'views/index.html'
         ]
       }
     },
@@ -41,9 +42,11 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-less');
+  grunt.loadNpmTasks('grunt-contrib-min');
+  // grunt.loadNpmTasks('grunt-contrib-rev');
   grunt.loadNpmTasks('grunt-assets-revving');
 
   // Default task.
-  grunt.registerTask('default', ['less', 'minify', 'rev']);
+  grunt.registerTask('default', ['less', 'rev']);
 
 };

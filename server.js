@@ -1,4 +1,6 @@
 var http = require('http'),
+	https = require('https'),
+	ssl = require('./ssl'),
 	fs = require('fs'),
 	url = require('url'),
 	path = require('path'),
@@ -9,7 +11,8 @@ var contentTypes = {
 	'.html': 'text/html',
 	'.css': "text/css",
 	'.js': 'application/javascript',
-	'.png': 'image/png'
+	'.png': 'image/png',
+	'.jpg': 'image/jpeg'
 };
 
 var start = function() {
@@ -39,7 +42,7 @@ var start = function() {
 							response.write(err + "\n");
 							response.end();
 						} else {
-							console.log(contentType);
+							console.log('MIME TYPE for: ', filename , contentType);
 							response.write(file);
 							response.end();
 						}
@@ -48,7 +51,11 @@ var start = function() {
 			});
 		}
 	};
-	var server = http.createServer(onRequest);
+	if (process.env.NODE_ENV === 'production') {
+		var server = https.createServer(ssl, onRequest);
+	} else {
+		var server = http.createServer(onRequest);
+	}
 	server.listen(port, host, function() {
 		console.log('Server listening on: ' + host + ':' + port);
 	});

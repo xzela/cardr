@@ -53,7 +53,7 @@ var start = function() {
 		}
 	};
 	if (process.env.NODE_ENV === 'production') {
-		var ssl = require('.ssl');
+		var ssl = require('./ssl');
 		var server = https.createServer(ssl, onRequest);
 	} else {
 		var server = http.createServer(function(request, response) {

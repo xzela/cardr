@@ -4,7 +4,7 @@ var http = require('http'),
 	url = require('url'),
 	path = require('path'),
 	host = '127.0.0.1',
-	port = 3000;
+	port = 3001;
 
 var contentTypes = {
 	'.html': 'text/html',
@@ -15,48 +15,47 @@ var contentTypes = {
 };
 
 var start = function() {
+	'use strict';
 	function onRequest(request, response) {
 		if (request.method === "POST") {
 			// kill all post request.
 			response.writeHead(500, {'Content-type': 'text/plain'});
 			response.write('no posts allowed, bitch');
-			response.end();
-		} else {
-			var uri = url.parse(request.url).pathname,
-				filename = path.join(__dirname, 'views', uri);
-			fs.exists(filename, function(exists) {
-				if (!exists) {
-					response.writeHead(404, {'Content-type': 'text/plain'});
-					response.write('resource does not exist: ' + uri);
-					response.end();
-				} else {
-					// if root directory, append index.html
-					if (fs.statSync(filename).isDirectory()) {
-						filename += 'index.html';
-					}
-					var contentType = contentTypes[path.extname(filename)];
-					fs.readFile(filename, function(err, file) {
-						if (err) {
-							console.log(err);
-							response.writeHead(404, {'Content-type': 'text/plain'});
-							response.write(err + "\n");
-							response.end();
-						} else {
-							console.log('MIME TYPE for: ', filename , contentType);
-							response.writeHead(200, {'Content-Type': contentType});
-							response.write(file);
-							response.end();
-						}
-					});
-				}
-			});
+			return response.end();
 		}
-	};
+		var uri = url.parse(request.url).pathname,
+			filename = path.join(__dirname, 'views', uri);
+		fs.exists(filename, function(exists) {
+			if (!exists) {
+				response.writeHead(404, {'Content-type': 'text/plain'});
+				response.write('resource does not exist: ' + uri);
+				return response.end();
+			}
+			// if root directory, append index.html
+			if (fs.statSync(filename).isDirectory()) {
+				filename += 'index.html';
+			}
+			var contentType = contentTypes[path.extname(filename)];
+			fs.readFile(filename, function(err, file) {
+				if (err) {
+					console.log(err);
+					response.writeHead(404, {'Content-type': 'text/plain'});
+					response.write(err + "\n");
+					return response.end();
+				}
+				console.log('MIME TYPE for: ', filename , contentType);
+				response.writeHead(200, {'Content-Type': contentType});
+				response.write(file);
+				response.end();
+			});
+		});
+	}
+	var server;
 	if (process.env.NODE_ENV === 'production') {
 		var ssl = require('./ssl');
-		var server = https.createServer(ssl, onRequest);
+		server = https.createServer(ssl, onRequest);
 	} else {
-		var server = http.createServer(function(request, response) {
+		 server = http.createServer(function(request, response) {
 			onRequest(request, response);
 			// console.log('done...');
 		});

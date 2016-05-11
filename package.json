@@ -30,6 +30,10 @@
   "homepage": "https://github.com/xzela/cardr#readme",
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13"
+    "grunt-cli": "^0.1.13",
+    "restify": "^4.0.4"
+  },
+  "dependencies": {
+    "is_js": "^0.8.0"
   }
 }

@@ -12,12 +12,14 @@
 		return next();
 	});
 
+	// all routes here
 	require('./routes')(server);
 
-	server.get('/', function (req, res) {
-		console.log('got request');
-		return res.send({});
-	});
+	// serve up the static main page
+	server.get(/^\/?.*/, restify.serveStatic({
+		directory: './views',
+		default: 'index.html'
+	}));
 
 	server.listen(PORT, function () {
 		console.log('%s listening at %s', server.name, server.url);
